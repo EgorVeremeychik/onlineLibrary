@@ -54,6 +54,7 @@
             <input type="submit" id="login_button" value="<fmt:message key="entry" bundle="${content}"/>"/>
             <p id="error"></p>
         </form>
+        <jsp:include page="WEB-INF/jsp/common/locales.jsp"/>
     </div>
     <div class="footer">
         <fmt:message key="author.info" bundle="${content}"/>

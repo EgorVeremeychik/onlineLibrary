@@ -35,14 +35,24 @@ body{
 
 .logout_form{
     float: right;
-    padding-top: 50px;
+    width: 300px;
+    padding-top: 15px;
     font-weight: normal;
     text-align: right;
 }
 
+ul.language {
+    list-style-type: none;
+    margin: 20px 40px 10px;
+}
+
+ul.language li {
+    display: inline-block;
+}
+
 .logout_form a{
     margin-right: 20px;
-    font-size: 10px;
+    font-size: 12px;
 }
 
 .user_greeting{

@@ -11,7 +11,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js" language="JavaScript"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $('ul').find('a').click(function(){
+            $('nav').find('a').click(function(){
                 alert("sdfsdfd");
             });
         });

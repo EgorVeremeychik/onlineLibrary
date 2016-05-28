@@ -1,1 +1,4 @@
-.idea/
+/.idea/*
+/target/*
+/OnlineLibrary.imi
+/library.log

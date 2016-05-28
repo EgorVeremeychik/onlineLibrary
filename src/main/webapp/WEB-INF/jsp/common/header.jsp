@@ -11,23 +11,8 @@
         <h3><fmt:message key="index.title" bundle="${content}"/></h3>
     </div>
     <div class="logout_form">
-        <div>
-            <form action="changeLanguage" method="post">
-                <input type="hidden" name="loc" value="ru_RU"/>
-                <a href="javascript:;" onclick="parentNode.submit()" data-toggle="modal">
-                    <img class="img-responsive img-header-lang" src="images/rus.png" alt="Russian language">
-                </a>
-            </form>
-        </div>
-        <div>
-            <form action="changeLanguage" method="post">
-                <input type="hidden" name="loc" value="en_EN"/>
-                <a href="javascript:;" onclick="parentNode.submit()" data-toggle="modal">
-                    <img class="img-responsive img-header-lang" src="images/eng.png" alt="English language">
-                </a>
-            </form>
-        </div>
-        <p><h5><fmt:message key="welcome" bundle="${content}"/>, <c:out value="${user.login}"/></h5></p>
+        <jsp:include page="locales.jsp"/>
+        <h5><fmt:message key="welcome" bundle="${content}"/>, <c:out value="${user.login}"/></h5>
         <form action="logout" method="post">
             <a href="javascript:" onclick="parentNode.submit()"><fmt:message key="exit" bundle="${content}"/></a>
         </form>
