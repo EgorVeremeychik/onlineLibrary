@@ -61,7 +61,7 @@ public class BookDAO implements IBaseDAO<Book> {
             preparedStatement.setLong(6, entity.getAuthor().getId());
             preparedStatement.setInt(7, entity.getPublishDate());
             preparedStatement.setLong(8, entity.getPublisher().getId());
-            preparedStatement.setBytes(9, entity.getImage());
+            preparedStatement.setString(9, entity.getImage());
             preparedStatement.setString(10, entity.getDescription());
             preparedStatement.executeQuery();
             result = true;
@@ -181,7 +181,7 @@ public class BookDAO implements IBaseDAO<Book> {
             Author author = AuthorDAO.getInstance().read(authorID);
             int publisherID = resultSet.getInt("publisher_id");
             Publisher publisher = PublisherDAO.getInstance().read(publisherID);
-            byte[] image = resultSet.getBytes("image");
+            String image = resultSet.getString("image");
             String description = resultSet.getString("descr");
             result = new Book(bookID,name,pageCount,isbn,genre,publishDate,author,publisher,image,description);
         } catch (SQLException e) {
@@ -197,7 +197,7 @@ public class BookDAO implements IBaseDAO<Book> {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_NAME_OR_AUTHOR)) {
             preparedStatement.setString(1,"%" + bookName + "%");
             preparedStatement.setString(2,"%" + authorFio + "%");
-            preparedStatement.setInt(3,start);
+            preparedStatement.setInt(3,start*3);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Book book = createBook(resultSet);

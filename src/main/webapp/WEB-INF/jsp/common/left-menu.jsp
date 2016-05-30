@@ -9,11 +9,12 @@
         <li>
             <form class="formClass" action="main" method="get">
                 <input type="hidden" name="genreID" value="0">
+                <input type="hidden" name="page" value="1">
                 <c:if test="${genre.id == alreadySaw}">
-                    <a style="color: red" href="javascript:;" onclick="parentNode.submit();">Все книги</a>
+                    <a class="ajaxAction" style="color: red" href="javascript:;" onclick="parentNode.submit();">Все книги</a>
                 </c:if>
                 <c:if test="${genre.id != alreadySaw}">
-                    <a href="javascript:;" onclick="parentNode.submit();">Все книги</a>
+                    <a class="ajaxAction" href="javascript:;" onclick="parentNode.submit();">Все книги</a>
                 </c:if>
             </form>
         </li>
@@ -21,11 +22,12 @@
             <li>
                 <form class="formClass" action="main" method="get">
                     <input type="hidden" name="genreID" value="${genre.id}">
+                    <input type="hidden" name="page" value="1">
                     <c:if test="${genre.id == alreadySaw}">
-                        <a style="color: red" href="javascript:;" onclick="parentNode.submit();">${genre.name}</a>
+                        <a class="ajaxAction" style="color: red" href="javascript:;" onclick="parentNode.submit();">${genre.name}</a>
                     </c:if>
                     <c:if test="${genre.id != alreadySaw}">
-                        <a href="javascript:;" onclick="parentNode.submit();">${genre.name}</a>
+                        <a class="ajaxAction" href="javascript:;" onclick="parentNode.submit();">${genre.name}</a>
                     </c:if>
                 </form>
             </li>

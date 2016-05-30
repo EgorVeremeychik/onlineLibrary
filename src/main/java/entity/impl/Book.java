@@ -13,7 +13,7 @@ public class Book implements Serializable, IEntity {
     private String name;
     private Genre genre;
     private String isbn;
-    private byte[] image;
+    private String image = "image-not-found.jpg";
     private Author author;
     private int pageCount;
     private byte[] content;
@@ -25,7 +25,7 @@ public class Book implements Serializable, IEntity {
     }
 
     public Book(long bookID, String name, int pageCount, String isbn, Genre genre, int publishDate,
-                Author author, Publisher publisher, byte[] image, String description) {
+                Author author, Publisher publisher, String image, String description) {
         this.id = bookID;
         this.name = name;
         this.pageCount = pageCount;
@@ -102,11 +102,11 @@ public class Book implements Serializable, IEntity {
         this.publisher = publisher;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

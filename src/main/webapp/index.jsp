@@ -10,20 +10,6 @@
     <link href="${pageContext.request.contextPath}/css/style_index.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="js/authorization.js" language="JavaScript"></script>
     <script type="text/javascript" src="js/jquery.min.js" language="JavaScript"></script>
-    <script>
-        $(document).ready(function(){
-            $('#bttnLogin').click(function(){
-                var login = $('#login').val();
-                $.ajax({
-                    type:'POST',
-                    url:'Login',
-                    data: {login: login},
-                    success: function(){
-                    }
-                })
-            });
-        });
-    </script>
 </head>
 <body>
 <noscript>

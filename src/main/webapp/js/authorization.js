@@ -9,8 +9,17 @@ function validateForm(form, message) {
 }
 
  $(document).ready(function(){
-     $("ul").find("a").css({"color": "red"});
+     $("ul").find($('.ajaxAction')).onclick(function(){
+        alert("fsdfasda");
+     });
  });
+
+$(document).ready(function(){
+    $("ul").on('click','a[href="javascript:;"]',function(){
+            alert("Код удаления");
+        return false;
+    });
+});
 
 
     $(document).ready(function () {

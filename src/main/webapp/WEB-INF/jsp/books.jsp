@@ -10,10 +10,10 @@
     <link href="${pageContext.request.contextPath}/css/style_main.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js" language="JavaScript"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('nav').find('a').click(function(){
-                alert("sdfsdfd");
-            });
+        $('.ajaxAction').click(function () {
+            $(this).find('a').click();
+            alert("ssdgsdfsd");
+            return false;
         });
     </script>
 </head>
@@ -24,40 +24,11 @@
     <jsp:include page="common/left-menu.jsp"/>
     <div class="book_list">
         <h4><fmt:message key="book.count" bundle="${content}"/> : ${booksCount}</h4>
-        <div class="pagination">
-            <form action="main?genreID=${genreID}" method="post" name="nextPage1">
-                <input type="hidden" name="pageNo" value="${pageNo+1}">
-                <input type="hidden" name="startPage" value="${pageNo+1}">
-                <input type="hidden" name="genreID" value="${genre.id}">
-            </form>
-            <form action="main?genreID=${genreID}" method="post" name="prevPage1">
-                <input type="hidden" name="pageNo" value="${pageNo-1}">
-                <input type="hidden" name="startPage" value="${pageNo-1}">
-                <input type="hidden" name="genreID" value="${genre.id}">
-            </form>
-            <c:if test="${booksCount gt 3}">
-                <c:if test="${startPage eq 0}">
-                    <span class="disabled"> << </span>
-                </c:if>
-                <c:if test="${startPage gt 0}">
-                    <a href="javascript:;" onclick="document.prevPage1.submit();"> << </a>
-                </c:if>
-                <span class="current">${pageNo}</span>
-                <c:if test="${startPage eq lastPage}">
-                    <span class="disabled"> >> </span>
-                </c:if>
-                <c:if test="${startPage lt lastPage}">
-                    <a href="javascript:;" onclick="document.nextPage1.submit();"> >> </a>
-                </c:if>
-            </c:if>
-            <c:if test="${booksCount le 3 and booksCount gt 0}">
-                <span class="current">1</span>
-            </c:if>
-        </div>
+        <jsp:include page="common/pagination.jsp"/>
         <c:forEach var="book" items="${books}">
             <div class="book_info">
                 <div class="book_image">
-                    <img src="${book.image}" alt="Book image" height="160" width="120">
+                    <img src="images/books/${book.image}" alt="Book image" height="160" width="120">
                 </div>
                 <div class="book_details">
                     <p><a href="#">${book.name}</a></p>
