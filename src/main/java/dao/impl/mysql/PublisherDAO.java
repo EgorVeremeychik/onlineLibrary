@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class PublisherDAO implements IBaseDAO<Publisher> {
 
     private static final Logger LOG = Logger.getLogger(PublisherDAO.class);
     private static final String READ_BY_PUBLISHER_ID = "SELECT * FROM publisher where id =?";
+    private static final String READ_ALL = "SELECT * FROM publisher";
 
     private PublisherDAO() {
     }
@@ -70,7 +72,18 @@ public class PublisherDAO implements IBaseDAO<Publisher> {
 
     @Override
     public List<Publisher> readAll(int start) {
-        return null;
+        List<Publisher> result = new ArrayList<>();
+        try(Connection connection = ConnectionsPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(READ_ALL);
+            ResultSet resultSet = preparedStatement.executeQuery()){
+            while (resultSet.next()){
+                Publisher publisher = createPublisher(resultSet);
+                result.add(publisher);
+            }
+        }catch (SQLException e){
+            LOG.error(e);
+        }
+        return result;
     }
 
     @Override

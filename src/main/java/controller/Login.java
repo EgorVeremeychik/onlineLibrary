@@ -1,7 +1,8 @@
 package controller;
 
-import command.ICommand;
-import command.impl.LoginCommand;
+import entity.impl.User;
+import manager.PagesEnum;
+import manager.PagesManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,8 @@ import java.io.IOException;
 @WebServlet(name = "Login", urlPatterns = "/login")
 public class Login extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(Login.class);
+    private static final String LOGIN = "login";
+    private static final String USER = "user";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,8 +35,14 @@ public class Login extends HttpServlet {
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path;
-        ICommand command = new LoginCommand();
-        path = command.execute(request);
+        User user = (User)request.getSession().getAttribute(USER);
+        if(user == null){
+            String login = request.getParameter(LOGIN);
+            user = new User(login);
+            request.getSession().setAttribute(USER, user);
+            LOG.info("LOGIN SUCCESS!");
+        }
+        path = PagesManager.getPage(PagesEnum.START_BOOK_CATALOG);
         response.sendRedirect(path);
 
     }

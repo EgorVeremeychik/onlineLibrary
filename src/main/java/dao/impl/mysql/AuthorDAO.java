@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class AuthorDAO implements IBaseDAO<Author> {
 
     private static final Logger LOG = Logger.getLogger(AuthorDAO.class);
     private static final String READ_BY_AUTHOR_ID = "SELECT * FROM author where id =?";
+    private static final String READ_ALL = "SELECT * FROM author";
 
     private AuthorDAO() {
     }
@@ -70,7 +72,18 @@ public class AuthorDAO implements IBaseDAO<Author> {
 
     @Override
     public List<Author> readAll(int start) {
-        return null;
+        List<Author> result = new ArrayList<>();
+        try (Connection connection = ConnectionsPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(READ_ALL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            while (resultSet.next()) {
+                Author author = createAuthor(resultSet);
+                result.add(author);
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+        return result;
     }
 
     @Override

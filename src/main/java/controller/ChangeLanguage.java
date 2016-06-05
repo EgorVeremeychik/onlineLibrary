@@ -1,7 +1,7 @@
 package controller;
 
-import command.ICommand;
-import command.impl.ChangeLanguageCommand;
+import manager.PagesEnum;
+import manager.PagesManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -31,8 +31,8 @@ public class ChangeLanguage extends HttpServlet {
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path;
-        ICommand command = new ChangeLanguageCommand();
-        path = command.execute(request);
+        request.getSession(true).setAttribute("lang", request.getParameter("loc"));
+        path = PagesManager.getPage(PagesEnum.START_BOOK_CATALOG);
         response.sendRedirect(path);
     }
 

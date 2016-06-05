@@ -1,7 +1,7 @@
 package controller;
 
-import command.ICommand;
-import command.impl.LogoutCommand;
+import manager.PagesEnum;
+import manager.PagesManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -18,6 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "Logout", urlPatterns = "/logout")
 public class Logout extends HttpServlet {
     private static final Logger LOG = Logger.getLogger(Logout.class);
+    private static final String USER = "user";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,8 +34,9 @@ public class Logout extends HttpServlet {
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path;
         try {
-            ICommand command = new LogoutCommand();
-            path = command.execute(request);
+            request.getSession().setAttribute(USER, null);
+            path = PagesManager.getPage(PagesEnum.AUTHORIZATION);
+            LOG.info("LOGOUT SUCCESS!");
             request.getRequestDispatcher(path).forward(request, response);
         } catch (ServletException e) {
             LOG.error(e);

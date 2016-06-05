@@ -37,7 +37,7 @@ public class AccessFilter implements Filter {
             if (user == null) {
                 login = request.getParameter(LOGIN);
                 if (login == null || login.equals("")) {
-                    path = PagesManager.getPage(PagesEnum.INDEX);
+                    path = PagesManager.getPage(PagesEnum.AUTHORIZATION);
                     response.sendRedirect(path);
                 }else{
                     filterChain.doFilter(request, response);

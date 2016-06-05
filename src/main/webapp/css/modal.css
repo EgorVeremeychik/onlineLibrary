@@ -1,0 +1,298 @@
+.popup-container {
+    background: #fff;
+    width: 620px;
+    border-radius: 5px;
+    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: 0px 2px 3px #2f2f2f;
+}
+
+.popup-container h2 {
+    font-size: 16px;
+    color: #969c9d;
+    font-weight: bold;
+    background: #ecf5f7;
+    padding: 15px 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.popup-info {
+    overflow: hidden;
+}
+
+.avatar-box {
+    float: left;
+    width: 155px;
+    text-align: center;
+    padding-top: 27px;
+}
+
+.avatar-box img {
+    margin-bottom: 10px;
+}
+
+.ava-info {
+    overflow: hidden;
+    border-left: 1px solid #e5e5e5;
+    padding: 25px 0 0 25px;
+}
+
+.ava-info .block {
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+
+.ava-info .block p {
+    float: left;
+    width: 135px;
+    font-size: 16px;
+    color: #a3a3a3;
+    margin-top: 17px;
+}
+
+.ava-info .block p span {
+    display: block;
+    font-size: 14px;
+    font-style: italic;
+    padding-top: 17px;
+}
+
+.ava-form {
+    overflow: hidden;
+    padding: 5px;
+}
+
+.ava-form input {
+    width: 270px;
+    padding-left: 10px;
+    height: 40px;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #000;
+    box-shadow: inset 0 0 7px #e2e2e2;
+}
+
+.ava-form textarea {
+    width: 259px;
+    padding: 10px;
+    height: 129px;
+    margin-bottom: 15px;
+    font-family: "Arial";
+    resize: none;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #000;
+    box-shadow: inset 0 0 7px #e2e2e2;
+}
+
+.ava-form input:focus, .ava-form textarea:focus {
+    border: 1px solid #30b0e2;
+    box-shadow: 0px 0px 5px #30b0e2;
+    outline: none;
+}
+
+.nw {
+    width: 125px !important;
+}
+
+.loaded {
+    overflow: hidden;
+    padding-bottom: 8px;
+}
+
+.loaded .name {
+    float: left;
+    padding: 9px 20px 9px 40px;
+    color: #0b87c1;
+    font-size: 16px;
+    background: url(../images/modal/pdf.png) no-repeat 12px 50% #f2f2f2;
+    border-radius: 3px;
+}
+
+.loaded .name:hover {
+    text-decoration: none;
+}
+
+.loaded .close {
+    float: left;
+    margin-left: 18px;
+}
+
+.load-pdf {
+    background: url(../images/modal/load-pdf.png) repeat-x;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    color: #616161;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.load-pdf span {
+    display: inline-block;
+    background: url(../images/modal/pluse.png) no-repeat 14px 50%;
+    padding: 8px 10px 8px 35px;
+}
+
+.bottom-info {
+    background: #f2f2f2;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 10px 20px;
+    overflow: hidden;
+}
+
+.bottom-info p {
+    float: left;
+    color: #b42f2f;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.button-right {
+    float: right;
+}
+
+.button-right a {
+    float: left;
+    display: block;
+    background: url(../images/modal/button-right.png) repeat-x;
+    padding: 10px 0px 6px 0px;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    color: #616161;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    margin-left: 19px;
+}
+
+.button-right .cancel {
+    width: 98px;
+}
+
+.button-right .save {
+    width: 158px;
+}
+
+select,
+.selectBox1 {
+    width: 279px;
+    height: 36px;
+    border: 1px solid #e2e2e2;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #000;
+    box-shadow: inset 0 0 7px #e2e2e2;
+    position: relative;
+}
+
+.selectBox1:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+.selectBox1-label {
+    position: absolute;
+    top: 9px;
+    left: 10px;
+}
+
+.selectBox1-arrow {
+    position: absolute;
+    left: auto;
+    right: 10px;
+    top: 17px;
+    width: 11px;
+    height: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    background: url(../images/modal/select.png) 0 0 no-repeat;
+}
+
+.selectBox1-dropdown-menu {
+    position: absolute;
+    list-style: none;
+    font-size: 16px;
+    line-height: 20px;
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #e2e2e2;
+}
+
+.selectBox1-dropdown-menu li {
+    display: block;
+}
+
+.selectBox1-dropdown-menu li a {
+    display: block;
+    padding: 5px 10px;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.selectBox1-dropdown-menu li a:hover {
+    color: #fff;
+    text-decoration: none;
+    background: #333;
+}
+
+.modalDialog {
+    position: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    display: none;
+    pointer-events: none;
+}
+
+.modalDialog:target {
+    display: block;
+    pointer-events: auto;
+}
+
+.modalDialog > div {
+    position: relative;
+}
+
+.dropdown1 select {
+    background: url(../images/select-button.png) no-repeat right #ffffff;
+    line-height: 1;
+    height: 42px;
+    -webkit-appearance: none;
+}
+
+.dropdown1 select, .selectBox {
+    position: relative;
+    color: #000;
+    text-decoration: none;
+    width: 270px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #e2e2e2;
+    float: left;
+    padding: 12px 0px 12px 15px;
+}
+
+#addBook.active {
+    display: block;
+    pointer-events: auto;
+    overflow-y: auto;
+}
+
+.scroll{
+    overflow-y: hidden;
+}

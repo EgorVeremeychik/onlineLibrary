@@ -8,48 +8,72 @@ function validateForm(form, message) {
     }
 }
 
- $(document).ready(function(){
-     $("ul").find($('.ajaxAction')).onclick(function(){
-        alert("fsdfasda");
-     });
- });
+var addBook = $('#addBook');
 
-$(document).ready(function(){
-    $("ul").on('click','a[href="javascript:;"]',function(){
-            alert("Код удаления");
-        return false;
-    });
-});
+function bookMore(bookID) {
+    $.ajax({
+            type: 'POST',
+            url: 'bookMore?bookID=' + bookID,
+            success: function (data) {
+                console.log(data);
+                var genres = data["genresList"];
+                var authors = data["authorsList"];
+                var publishers = data["publishersList"];
+                var book = data["book"];
+                var bookGenre = book["genre"];
+                var bookAuthor = book["author"];
+                var bookPublisher = book["publisher"];
 
+                addBook.find('.c-genre').html('');
+                addBook.find('.c-author').html('');
+                addBook.find('.c-publisher').html('');
 
-    $(document).ready(function () {
-        $("#login_form").submit(function () {
-            //remove previous class and add new "myinfo" class
-            $("#msgbox").removeClass().addClass('myinfo').text('Validating Your Login ').fadeIn(1000);
-            this.timer = setTimeout(function () {
-                $.ajax({
-                    url: 'check.jsp',
-                    data: 'un=' + $('#login_id').val() + '&pw=' + $('#password').val(),
-                    type: 'post',
-                    success: function (msg) {
-                        if (msg != 'ERROR') // Message Sent, check and redirect
-                        {                   // and direct to the success page
-                            $("#msgbox").html('Login Verified, Logging in.....').addClass('myinfo').fadeTo(900, 1,
-                                function () {
-                                    //redirect to secure page
-                                    document.location = 'login.jsp?user=' + msg;
-                                });
-                        }
-                        else {
-                            $("#msgbox").fadeTo(200, 0.1, function () //start fading the messagebox
-                            {
-                                //add message and change the class of the box and start fading
-                                $(this).html('Sorry, Wrong Combination Of Username And Password.').removeClass().addClass('myerror').fadeTo(900, 1);
-                            });
-                        }
+                addBook.find('.c-genre').append($(new Option("","",true,true)));
+                addBook.find('.c-author').append($(new Option("","",true,true)));
+                addBook.find('.c-publisher').append($(new Option("","",true,true)));
+
+                for (var key in genres) {
+                    if (genres[key].name === bookGenre.name) {
+                        addBook.find('.c-genre').append($(new Option(genres[key].name,genres[key].name,true,true)));
+                    } else {
+                        addBook.find('.c-genre').append($(new Option(genres[key].name,genres[key].name,false,false)));
                     }
-                });
-            }, 200);
-            return false;
-        });
-    });
+                }
+                for (var key in authors) {
+                    if (authors[key].name === bookAuthor.name) {
+                        addBook.find('.c-author').append($(new Option(authors[key].name,authors[key].name,true,true)));
+                    } else {
+                        addBook.find('.c-author').append($(new Option(authors[key].name,authors[key].name,false,false)));
+                    }
+                }
+                for (var key in publishers) {
+                    if (bookPublisher != null) {
+                        if (publishers[key].name === bookPublisher.name) {
+                            addBook.find('.c-publisher').append($(new Option(publishers[key].name,publishers[key].name,true,true)));
+                        } else {
+                            addBook.find('.c-publisher').append
+                            ($(new Option(publishers[key].name,publishers[key].name,false,false)));
+                        }
+                    }else{
+                        addBook.find('.c-publisher').append
+                        ($(new Option(publishers[key].name,publishers[key].name,false,false)));
+                    }
+                }
+
+                addBook.find('.c-img').attr('src', 'images/books/' + book.image);
+                addBook.find('.c-name').val(book.name);
+                addBook.find('.c-isbn').val(book.isbn);
+                addBook.find('.c-year').val(book.publishDate);
+                addBook.find('.c-pages').val(book.pageCount);
+                addBook.find('.c-descr').val(book.description);
+                $(document.body).addClass('scroll');
+                addBook.addClass('active');
+            }
+        }
+    );
+}
+
+function closeModal() {
+    addBook.removeClass('active');
+    $(document.body).removeClass('scroll');
+}

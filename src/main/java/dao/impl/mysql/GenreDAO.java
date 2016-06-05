@@ -39,12 +39,12 @@ public class GenreDAO implements IBaseDAO<Genre> {
     }
 
     @Override
-    public Genre read(int key) {
+    public Genre read(int genreID) {
         Genre result = null;
         ResultSet resultSet = null;
         try(Connection connection = ConnectionsPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(READ_BY_GENRE_ID)){
-            preparedStatement.setInt(1,key);
+            preparedStatement.setInt(1,genreID);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 result = createGenre(resultSet);
@@ -84,18 +84,6 @@ public class GenreDAO implements IBaseDAO<Genre> {
         return result;
     }
 
-    private Genre createGenre(ResultSet resultSet) {
-        Genre result = null;
-        try {
-            int genreID = resultSet.getInt("id");
-            String name = resultSet.getString("name");
-            result = new Genre(genreID, name);
-        } catch (SQLException e) {
-            LOG.error(e);
-        }
-        return result;
-    }
-
     @Override
     public List<Genre> readAll(String str) {
         return null;
@@ -129,5 +117,17 @@ public class GenreDAO implements IBaseDAO<Genre> {
     @Override
     public boolean delete(int key) {
         return false;
+    }
+
+    private Genre createGenre(ResultSet resultSet) {
+        Genre result = null;
+        try {
+            int genreID = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            result = new Genre(genreID, name);
+        } catch (SQLException e) {
+            LOG.error(e);
+        }
+        return result;
     }
 }

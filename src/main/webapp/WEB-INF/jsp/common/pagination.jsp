@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <div class="pagination">
-    <c:if test="${booksCount gt 3}">
+    <c:if test="${booksCount gt 6}">
         <c:if test="${startPage eq 0}">
             <span class="disabled"> << </span>
         </c:if>
@@ -26,7 +26,7 @@
             </c:if>
         </c:if>
     </c:if>
-    <c:if test="${booksCount le 3 and booksCount gt 0}">
+    <c:if test="${booksCount le 6 and booksCount gt 0}">
         <span class="current">1</span>
     </c:if>
 </div>

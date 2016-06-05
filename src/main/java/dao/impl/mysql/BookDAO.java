@@ -26,16 +26,17 @@ public class BookDAO implements IBaseDAO<Book> {
     private static final Logger LOG = Logger.getLogger(BookDAO.class);
     public static final String SELECT_BOOK_BY_NAME_OR_AUTHOR =
             "SELECT * FROM book INNER JOIN author " +
-                    "ON book.author_id = author.id WHERE book.name LIKE ? OR author.fio LIKE ? LIMIT 3 OFFSET ?";
+                    "ON book.author_id = author.id WHERE book.name LIKE ? OR author.fio LIKE ? LIMIT 6 OFFSET ?";
     private static final String CREATE =
             "INSERT INTO book(name, content, page_count, isbn, genre_id, " +
                     "author_id, publish_year, publisher_id, image, descr) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
-    private static final String READ_ALL = "SELECT * FROM book LIMIT 3 OFFSET ?";
-    private static final String SELECT_BOOK_BY_GENRE_ID = "SELECT * FROM book WHERE genre_id = ? LIMIT 3 OFFSET ?";
+    private static final String READ_ALL = "SELECT * FROM book LIMIT 6 OFFSET ?";
+    private static final String SELECT_BOOK_BY_GENRE_ID = "SELECT * FROM book WHERE genre_id = ? LIMIT 6 OFFSET ?";
     private static final String NUM_ALL_BOOKS = "SELECT COUNT(*) FROM book";
     private static final String NUM_BOOKS_BY_GENRE_ID = "SELECT COUNT(*) FROM book WHERE genre_id = ?";
     private static final String NUM_BOOKS_FOUND = "SELECT COUNT(*) FROM book INNER JOIN author " +
             "ON book.author_id = author.id WHERE book.name LIKE ? OR author.fio LIKE ?";
+    private static final String READ_BOOK_BY_ID = "SELECT * FROM book WHERE id = ?";
 
     private BookDAO() {
     }
@@ -73,8 +74,28 @@ public class BookDAO implements IBaseDAO<Book> {
     }
 
     @Override
-    public Book read(int key) {
-        return null;
+    public Book read(int bookID) {
+        Book result = null;
+        ResultSet resultSet = null;
+        try(Connection connection = ConnectionsPool.getInstance().getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(READ_BOOK_BY_ID)) {
+            preparedStatement.setInt(1,bookID);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                result = createBook(resultSet);
+            }
+        } catch (SQLException e) {
+            LOG.error(e);
+        }finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                LOG.error(e);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -88,7 +109,7 @@ public class BookDAO implements IBaseDAO<Book> {
         ResultSet resultSet = null;
         try(Connection connection = ConnectionsPool.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(READ_ALL)) {
-            preparedStatement.setInt(1,start*3);
+            preparedStatement.setInt(1,start*6);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Book book = createBook(resultSet);
@@ -197,7 +218,7 @@ public class BookDAO implements IBaseDAO<Book> {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_NAME_OR_AUTHOR)) {
             preparedStatement.setString(1,"%" + bookName + "%");
             preparedStatement.setString(2,"%" + authorFio + "%");
-            preparedStatement.setInt(3,start*3);
+            preparedStatement.setInt(3,start*6);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Book book = createBook(resultSet);
@@ -223,7 +244,7 @@ public class BookDAO implements IBaseDAO<Book> {
         try (Connection connection = ConnectionsPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_GENRE_ID)) {
             preparedStatement.setLong(1,genreID);
-            preparedStatement.setInt(2,start*3);
+            preparedStatement.setInt(2,start*6);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 Book book = createBook(resultSet);

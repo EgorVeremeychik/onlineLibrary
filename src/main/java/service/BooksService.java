@@ -1,6 +1,7 @@
 package service;
 
 import dao.IBaseDAO;
+import dao.exception.DAOException;
 import dao.impl.mysql.BookDAO;
 import entity.impl.Book;
 import manager.QueriesEnum;
@@ -39,11 +40,11 @@ public class BooksService {
     public static List<Book> findBooks(String value, String searchOption, int start){
         List<Book> result = null;
         switch (searchOption){
-            case "Название":
+            case "По названию":
                 result = bookDAO.execute(QueriesEnum.BOOKS_BY_NAME_OR_AUTHOR,
                         new Object[]{value,null},start);
                 break;
-            case "Автор":
+            case "По автору":
                 result = bookDAO.execute(QueriesEnum.BOOKS_BY_NAME_OR_AUTHOR,
                         new Object[]{null,value},start);
                 break;
@@ -73,14 +74,30 @@ public class BooksService {
     public static int getNumBooksFound(String searchString, String searchOption){
         int result = 0;
         switch (searchOption){
-            case "Название":
+            case "По названию":
                 result = bookDAO.count(QueriesEnum.NUM_BOOKS_FOUND,
                         new Object[]{searchString,null});
                 break;
-            case "Автор":
+            case "По автору":
                 result = bookDAO.count(QueriesEnum.NUM_BOOKS_FOUND,
-                        new Object[]{null,searchOption});
+                        new Object[]{null,searchString});
                 break;
+        }
+        return result;
+    }
+
+    public static Book getBookByID(int bookID) {
+        Book book;
+        book = bookDAO.read(bookID);
+        return book;
+    }
+
+    public static Boolean addBook(Book book) {
+        boolean result = false;
+        try {
+            result = bookDAO.create(book);
+        } catch (DAOException e) {
+            LOG.error(e);
         }
         return result;
     }

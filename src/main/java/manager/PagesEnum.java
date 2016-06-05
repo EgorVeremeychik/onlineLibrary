@@ -6,8 +6,9 @@ package manager;
 public enum PagesEnum {
     GO_TO_MAIN("page.go.to.main"),
     MAIN("page.main"),
-    INDEX("page.index"),
+    AUTHORIZATION("page.authorization"),
     BOOK_CATALOG("page.book.catalog"),
+    BOOK_CATALOG_CONTENT("page.book.catalog.content"),
     START_BOOK_CATALOG("page.start.book.catalog");
 
     String value;
