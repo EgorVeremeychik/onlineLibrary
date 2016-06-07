@@ -12,7 +12,7 @@ import java.util.List;
 public interface IBaseDAO<T extends IEntity> {
     boolean create(T entity) throws DAOException;
 
-    T read(int key);
+    T read(Integer key);
 
     T read(T entity) throws DAOException;
 
@@ -22,13 +22,13 @@ public interface IBaseDAO<T extends IEntity> {
 
     boolean update(T entity) throws DAOException;
 
-    boolean delete(int key) throws DAOException;
+    boolean delete(Integer key) throws DAOException;
 
     boolean delete(T entity) throws DAOException;
 
     List<T> execute(QueriesEnum query, Object[] params, int start);
 
-    List<T> execute(QueriesEnum query, long param, int start);
+    List<T> execute(QueriesEnum query, Integer param, int start);
 
     int count(QueriesEnum query, Object[] params);
 }

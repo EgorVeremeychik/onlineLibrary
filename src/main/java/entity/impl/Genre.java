@@ -6,7 +6,7 @@ import entity.IEntity;
  * Created by EgorVeremeychik on 17.04.2016.
  */
 public class Genre implements IEntity {
-    private long id;
+    private Integer id;
     private String name;
 
     public Genre() {
@@ -16,7 +16,7 @@ public class Genre implements IEntity {
         this.name = name;
     }
 
-    public Genre(int genreID, String name) {
+    public Genre(Integer genreID, String name) {
         this.id = genreID;
         this.name = name;
     }
@@ -29,11 +29,12 @@ public class Genre implements IEntity {
         this.name = name;
     }
 
-    public long getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long genreID) {
+    public void setId(Integer genreID) {
         this.id = genreID;
     }
 }

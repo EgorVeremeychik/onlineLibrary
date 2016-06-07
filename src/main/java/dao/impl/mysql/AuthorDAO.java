@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class AuthorDAO implements IBaseDAO<Author> {
     }
 
     @Override
-    public Author read(int key){
+    public Author read(Integer key){
         Author result = null;
         ResultSet resultSet = null;
         try(Connection connection = ConnectionsPool.getInstance().getConnection();
@@ -97,7 +96,7 @@ public class AuthorDAO implements IBaseDAO<Author> {
     }
 
     @Override
-    public boolean delete(int key) throws DAOException {
+    public boolean delete(Integer key) throws DAOException {
         return false;
     }
 
@@ -112,7 +111,7 @@ public class AuthorDAO implements IBaseDAO<Author> {
     }
 
     @Override
-    public List<Author> execute(QueriesEnum query, long param, int start) {
+    public List<Author> execute(QueriesEnum query, Integer param, int start) {
         return null;
     }
 
@@ -124,10 +123,9 @@ public class AuthorDAO implements IBaseDAO<Author> {
     public Author createAuthor(ResultSet resultSet){
         Author result = null;
         try {
-            int authorID = resultSet.getInt("id");
-            Date birthday = resultSet.getDate("birthday");
+            Integer authorID = resultSet.getInt("id");
             String name = resultSet.getString("fio");
-            result = new Author(authorID, name, birthday);
+            result = new Author(authorID, name);
         } catch (SQLException e) {
             LOG.error(e);
         }

@@ -38,9 +38,8 @@ public class Main extends HttpServlet {
         int bookCount = 0;
         int startPage = 0;
         List<Book> books = null;
-        long selectedGenreId = 0;
+        Integer selectedGenreId = 0;
         try {
-
             if (request.getParameter("page") != null){
                 page = Integer.parseInt(request.getParameter("page"));
             }else {
@@ -49,10 +48,10 @@ public class Main extends HttpServlet {
             startPage = page - 1;
             HttpSession session = request.getSession();
             if (request.getParameter("genreID") != null) {
-                selectedGenreId = Long.valueOf(request.getParameter("genreID"));
+                selectedGenreId = Integer.valueOf(request.getParameter("genreID"));
             } else{
                 selectedGenreId = session.getAttribute("genreID") != null ?
-                        Long.valueOf(session.getAttribute("alreadySaw").toString()) : selectedGenreId;
+                        Integer.valueOf(session.getAttribute("alreadySaw").toString()) : selectedGenreId;
             }
             session.setAttribute("alreadySaw", selectedGenreId);
             bookCount = selectedGenreId == 0 ? BooksService.getNumAllBooks() :

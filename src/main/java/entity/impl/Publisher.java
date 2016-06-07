@@ -7,22 +7,23 @@ import entity.IEntity;
  */
 public class Publisher implements IEntity {
 
-    private long id;
+    private Integer id;
     private String name;
 
     public Publisher() {
     }
 
-    public Publisher(long publisherID, String name) {
+    public Publisher(Integer publisherID, String name) {
         this.id = publisherID;
         this.name = name;
     }
 
-    public long getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long publisherID) {
+    public void setId(Integer publisherID) {
         id = publisherID;
     }
 

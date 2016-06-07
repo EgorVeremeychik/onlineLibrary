@@ -41,7 +41,7 @@ public class PublisherDAO implements IBaseDAO<Publisher> {
     }
 
     @Override
-    public Publisher read(int key) {
+    public Publisher read(Integer key) {
         Publisher result = null;
         ResultSet resultSet = null;
         try(Connection connection = ConnectionsPool.getInstance().getConnection();
@@ -97,7 +97,7 @@ public class PublisherDAO implements IBaseDAO<Publisher> {
     }
 
     @Override
-    public boolean delete(int key) throws DAOException {
+    public boolean delete(Integer key) throws DAOException {
         return false;
     }
 
@@ -112,7 +112,7 @@ public class PublisherDAO implements IBaseDAO<Publisher> {
     }
 
     @Override
-    public List<Publisher> execute(QueriesEnum query, long param, int start) {
+    public List<Publisher> execute(QueriesEnum query, Integer param, int start) {
         return null;
     }
 
@@ -124,7 +124,7 @@ public class PublisherDAO implements IBaseDAO<Publisher> {
     public Publisher createPublisher(ResultSet resultSet){
         Publisher result = null;
         try {
-            int publisherID = resultSet.getInt("id");
+            Integer publisherID = resultSet.getInt("id");
             String name = resultSet.getString("name");
             result = new Publisher(publisherID, name);
         } catch (SQLException e) {

@@ -52,16 +52,16 @@ public class BookDAO implements IBaseDAO<Book> {
     @Override
     public boolean create(Book entity) throws DAOException {
         boolean result = false;
-        try(Connection connection = ConnectionsPool.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE)) {
+        try (Connection connection = ConnectionsPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE)) {
             preparedStatement.setString(1, entity.getName());
             preparedStatement.setBytes(2, entity.getContent());
             preparedStatement.setInt(3, entity.getPageCount());
             preparedStatement.setString(4, entity.getIsbn());
-            preparedStatement.setLong(5, entity.getGenre().getId());
-            preparedStatement.setLong(6, entity.getAuthor().getId());
+            preparedStatement.setInt(5, entity.getGenre().getId());
+            preparedStatement.setInt(6, entity.getAuthor().getId());
             preparedStatement.setInt(7, entity.getPublishDate());
-            preparedStatement.setLong(8, entity.getPublisher().getId());
+            preparedStatement.setInt(8, entity.getPublisher().getId());
             preparedStatement.setString(9, entity.getImage());
             preparedStatement.setString(10, entity.getDescription());
             preparedStatement.executeQuery();
@@ -74,19 +74,19 @@ public class BookDAO implements IBaseDAO<Book> {
     }
 
     @Override
-    public Book read(int bookID) {
+    public Book read(Integer bookID) {
         Book result = null;
         ResultSet resultSet = null;
-        try(Connection connection = ConnectionsPool.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(READ_BOOK_BY_ID)) {
-            preparedStatement.setInt(1,bookID);
+        try (Connection connection = ConnectionsPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(READ_BOOK_BY_ID)) {
+            preparedStatement.setInt(1, bookID);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 result = createBook(resultSet);
             }
         } catch (SQLException e) {
             LOG.error(e);
-        }finally {
+        } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -107,17 +107,17 @@ public class BookDAO implements IBaseDAO<Book> {
     public List<Book> readAll(int start) {
         List<Book> result = new ArrayList<>();
         ResultSet resultSet = null;
-        try(Connection connection = ConnectionsPool.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(READ_ALL)) {
-            preparedStatement.setInt(1,start*6);
+        try (Connection connection = ConnectionsPool.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(READ_ALL)) {
+            preparedStatement.setInt(1, start * 6);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Book book = createBook(resultSet);
                 result.add(book);
             }
         } catch (SQLException e) {
             LOG.error(e);
-        }finally {
+        } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -140,7 +140,7 @@ public class BookDAO implements IBaseDAO<Book> {
     }
 
     @Override
-    public boolean delete(int key) {
+    public boolean delete(Integer key) {
         return false;
     }
 
@@ -152,20 +152,20 @@ public class BookDAO implements IBaseDAO<Book> {
     @Override
     public List<Book> execute(QueriesEnum query, Object[] params, int start) {
         List<Book> result = null;
-        switch (query){
+        switch (query) {
             case BOOKS_BY_NAME_OR_AUTHOR:
-                result = readBookByNameOrAuthor((String) params[0],(String)params[1], start);
+                result = readBookByNameOrAuthor((String) params[0], (String) params[1], start);
                 break;
         }
         return result;
     }
 
     @Override
-    public List<Book> execute(QueriesEnum query, long param, int start) {
+    public List<Book> execute(QueriesEnum query, Integer param, int start) {
         List<Book> result = null;
-        switch (query){
+        switch (query) {
             case BOOKS_BY_GENRE_ID:
-                result = readBookByGenreID(param,start);
+                result = readBookByGenreID(param, start);
                 break;
         }
         return result;
@@ -174,59 +174,60 @@ public class BookDAO implements IBaseDAO<Book> {
     @Override
     public int count(QueriesEnum query, Object[] params) {
         int result = 0;
-        switch (query){
+        switch (query) {
             case NUM_ALL_BOOKS:
                 result = getNumAllBooks();
                 break;
             case NUM_BOOKS_BY_GENRE_ID:
-                result = getNumBooksByGenreID((Long) params[0]);
+                result = getNumBooksByGenreID((Integer) params[0]);
                 break;
             case NUM_BOOKS_FOUND:
-                result = getNumBooksFound((String)params[0],(String)params[1]);
+                result = getNumBooksFound((String) params[0], (String) params[1]);
                 break;
         }
         return result;
     }
 
-    public Book createBook(ResultSet resultSet){
+    public Book createBook(ResultSet resultSet) {
         Book result = null;
         try {
-            int bookID = resultSet.getInt("id");
+            Integer bookID = resultSet.getInt("id");
+            Integer genreID = resultSet.getInt("genre_id");
+            Genre genre = GenreDAO.getInstance().read(genreID);
+            Integer authorID = resultSet.getInt("author_id");
+            Author author = AuthorDAO.getInstance().read(authorID);
             String name = resultSet.getString("name");
+            byte[] content = resultSet.getBytes("content");
             int pageCount = resultSet.getInt("page_count");
             String isbn = resultSet.getString("isbn");
-            int genreID = resultSet.getInt("genre_id");
-            Genre genre = GenreDAO.getInstance().read(genreID);
             int publishDate = resultSet.getInt("publish_year");
-            int authorID = resultSet.getInt("author_id");
-            Author author = AuthorDAO.getInstance().read(authorID);
-            int publisherID = resultSet.getInt("publisher_id");
+            Integer publisherID = resultSet.getInt("publisher_id");
             Publisher publisher = PublisherDAO.getInstance().read(publisherID);
             String image = resultSet.getString("image");
             String description = resultSet.getString("descr");
-            result = new Book(bookID,name,pageCount,isbn,genre,publishDate,author,publisher,image,description);
+            result = new Book(bookID, name, pageCount, isbn, genre, publishDate, author, publisher, image, description, content);
         } catch (SQLException e) {
             LOG.error(e);
         }
         return result;
     }
 
-    public List<Book> readBookByNameOrAuthor(String bookName, String authorFio, int start){
+    public List<Book> readBookByNameOrAuthor(String bookName, String authorFio, int start) {
         List<Book> result = new ArrayList<>();
         ResultSet resultSet = null;
         try (Connection connection = ConnectionsPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_NAME_OR_AUTHOR)) {
-            preparedStatement.setString(1,"%" + bookName + "%");
-            preparedStatement.setString(2,"%" + authorFio + "%");
-            preparedStatement.setInt(3,start*6);
+            preparedStatement.setString(1, "%" + bookName + "%");
+            preparedStatement.setString(2, "%" + authorFio + "%");
+            preparedStatement.setInt(3, start * 6);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Book book = createBook(resultSet);
                 result.add(book);
             }
         } catch (SQLException e) {
             LOG.error(e);
-        }finally {
+        } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -238,21 +239,21 @@ public class BookDAO implements IBaseDAO<Book> {
         return result;
     }
 
-    private List<Book> readBookByGenreID(long genreID,int start) {
+    private List<Book> readBookByGenreID(Integer genreID, int start) {
         List<Book> result = new ArrayList<>();
         ResultSet resultSet = null;
         try (Connection connection = ConnectionsPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BOOK_BY_GENRE_ID)) {
-            preparedStatement.setLong(1,genreID);
-            preparedStatement.setInt(2,start*6);
+            preparedStatement.setInt(1, genreID);
+            preparedStatement.setInt(2, start * 6);
             resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Book book = createBook(resultSet);
                 result.add(book);
             }
         } catch (SQLException e) {
             LOG.error(e);
-        }finally {
+        } finally {
             try {
                 if (resultSet != null) {
                     resultSet.close();
@@ -269,7 +270,7 @@ public class BookDAO implements IBaseDAO<Book> {
         try (Connection connection = ConnectionsPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(NUM_ALL_BOOKS);
              ResultSet resultSet = preparedStatement.executeQuery()) {
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 result = resultSet.getInt(1);
             }
         } catch (SQLException e) {
@@ -278,14 +279,14 @@ public class BookDAO implements IBaseDAO<Book> {
         return result;
     }
 
-    private int getNumBooksByGenreID(long genreID) {
+    private int getNumBooksByGenreID(Integer genreID) {
         int result = 0;
         ResultSet resultSet = null;
         try (Connection connection = ConnectionsPool.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(NUM_BOOKS_BY_GENRE_ID)) {
-            preparedStatement.setLong(1,genreID);
+            preparedStatement.setInt(1, genreID);
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 result = resultSet.getInt(1);
             }
         } catch (SQLException e) {
@@ -298,11 +299,11 @@ public class BookDAO implements IBaseDAO<Book> {
         int result = 0;
         ResultSet resultSet = null;
         try (Connection connection = ConnectionsPool.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(NUM_BOOKS_FOUND)){
-            preparedStatement.setString(1,"%" + searchString + "%");
-            preparedStatement.setString(2,"%" + searchOption + "%");
+             PreparedStatement preparedStatement = connection.prepareStatement(NUM_BOOKS_FOUND)) {
+            preparedStatement.setString(1, "%" + searchString + "%");
+            preparedStatement.setString(2, "%" + searchOption + "%");
             resultSet = preparedStatement.executeQuery();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 result = resultSet.getInt(1);
             }
         } catch (SQLException e) {
@@ -311,19 +312,19 @@ public class BookDAO implements IBaseDAO<Book> {
         return result;
     }
 
-    public Set<Book> readBookByCategory(Integer categoryId, Integer start){
+    public Set<Book> readBookByCategory(Integer categoryId, Integer start) {
         return null;
     }
 
-    public Set<Book> readMostPopular(){
+    public Set<Book> readMostPopular() {
         return null;
     }
 
-    public Set<Book> readNewest(){
+    public Set<Book> readNewest() {
         return null;
     }
 
-    public boolean updatePath(String path, Integer bookId){
+    public boolean updatePath(String path, Integer bookId) {
         return false;
     }
 

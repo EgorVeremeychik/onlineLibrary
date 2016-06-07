@@ -5,7 +5,7 @@
 <fmt:setBundle basename="properties.content" var="content"/>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title><fmt:message key="welcome.title" bundle="${content}"/></title>
     <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/css/modal.css" rel="stylesheet" type="text/css">
@@ -116,9 +116,9 @@
                         <p><fmt:message key="isbn" bundle="${content}"/>:${book.isbn}</p>
                     </div>
                     <div class="clear"></div>
-                    <a class="mr" href="#"><p class="read"><fmt:message key="read" bundle="${content}"/></p></a>
-                    <a class="mr" href="#"><p class="download"><fmt:message key="download" bundle="${content}"/></p></a>
-                    <a class="mr" href="javascript:;"><p class="edit" onclick="bookMore(${book.id})">
+                    <a class="mr" href="readBook?bookID=${book.id}" target="_blank"><p class="read"><fmt:message key="read" bundle="${content}"/></p></a>
+                    <a class="mr" href="downloadBook?bookID=${book.id}" target="_blank"><p class="download"><fmt:message key="download" bundle="${content}"/></p></a>
+                    <a class="mr" href="javascript:;" onclick="bookMore(${book.id})"><p class="edit">
                         <fmt:message key="book.edit" bundle="${content}"/></p></a>
                     <a class="delete-button" href="#"><p class="delete">
                         <fmt:message key="book.delete" bundle="${content}"/></p></a>
@@ -158,6 +158,7 @@
                         <div class="dropdown1">
                             <select class="c-genre">
                             </select>
+                            <input type="text" class="i-genre settings" value="">
                         </div>
                     </div>
                 </div>
@@ -167,6 +168,7 @@
                         <div class="dropdown1">
                             <select class="c-author">
                             </select>
+                            <input type="text" class="i-author settings" value="">
                         </div>
                     </div>
                 </div>
@@ -176,6 +178,7 @@
                         <div class="dropdown1">
                             <select class="c-publisher">
                             </select>
+                            <input type="text" class="i-publisher settings" value="">
                         </div>
                     </div>
                 </div>
@@ -219,7 +222,7 @@
             <p>Заполните все поля!</p>
             <div class="button-right">
                 <a class="cancel" href="javascript:;" onclick="closeModal()">Отмена</a>
-                <a class="save" href="#">Сохранить</a>
+                <a class="save" href="javascript:;" onclick="saveChange()">Сохранить</a>
             </div>
         </div>
     </div>

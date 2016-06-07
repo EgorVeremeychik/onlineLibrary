@@ -2,28 +2,23 @@ package entity.impl;
 
 import entity.IEntity;
 
-import java.util.Date;
-
 /**
  * Created by EgorVeremeychik on 17.04.2016.
  */
-public class Author implements IEntity{
+public class Author implements IEntity {
     public Author() {
     }
 
-    private long id;
+    private Integer id;
     private String name;
-    private Date birthday;
 
-    public Author(String name, Date birthday) {
+    public Author(String name) {
         this.name = name;
-        this.birthday = birthday;
     }
 
-    public Author(long authorID, String name, Date birthday) {
+    public Author(Integer authorID, String name) {
         this.id = authorID;
         this.name = name;
-        this.birthday = birthday;
     }
 
     public String getName() {
@@ -34,19 +29,12 @@ public class Author implements IEntity{
         this.name = name;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public long getId() {
+    @Override
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long authorID) {
+    public void setId(Integer authorID) {
         this.id = authorID;
     }
 }

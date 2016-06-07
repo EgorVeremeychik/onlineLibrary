@@ -67,9 +67,9 @@
 .ava-form input {
     width: 270px;
     padding-left: 10px;
-    height: 40px;
+    height: 42px;
     border: 1px solid #e2e2e2;
-    border-radius: 3px;
+    border-radius: 5px;
     font-size: 16px;
     color: #000;
     box-shadow: inset 0 0 7px #e2e2e2;
@@ -293,6 +293,13 @@ select,
     overflow-y: auto;
 }
 
-.scroll{
+.scroll {
     overflow-y: hidden;
+}
+
+.settings {
+    position: absolute;
+    width: 230px !important;
+    left: 321px;
+    border-radius: 5px 0px 0px 5px !important;
 }

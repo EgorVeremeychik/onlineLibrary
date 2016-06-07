@@ -31,7 +31,7 @@ public class BooksService {
         return result;
     }
 
-    public static List<Book> getBooksByGenreID(long key, int start){
+    public static List<Book> getBooksByGenreID(Integer key, int start){
         List<Book> result = null;
         result = bookDAO.execute(QueriesEnum.BOOKS_BY_GENRE_ID, key, start);
         return result;
@@ -65,7 +65,7 @@ public class BooksService {
         return result;
     }
 
-    public static int getNumBooksByGenreID(long genreID){
+    public static int getNumBooksByGenreID(Integer genreID){
         int result = 0;
         result = bookDAO.count(QueriesEnum.NUM_BOOKS_BY_GENRE_ID,new Object[]{genreID});
         return result;
@@ -86,7 +86,7 @@ public class BooksService {
         return result;
     }
 
-    public static Book getBookByID(int bookID) {
+    public static Book getBookByID(Integer bookID) {
         Book book;
         book = bookDAO.read(bookID);
         return book;

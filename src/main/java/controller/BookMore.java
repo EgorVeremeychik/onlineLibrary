@@ -35,7 +35,7 @@ public class BookMore extends HttpServlet {
     }
 
     public void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        int bookID;
+        Integer bookID;
         List<Genre> genresList = null;
         List<Author> authorsList = null;
         List<Publisher> publishersList = null;

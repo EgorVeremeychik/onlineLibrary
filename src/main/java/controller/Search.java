@@ -41,8 +41,6 @@ public class Search extends HttpServlet {
         int bookCount = 0;
         int startPage = 0;
         try {
-
-
             HttpSession session = request.getSession();
             session.setAttribute("alreadySaw", null);
             if (request.getParameter("page") != null){
@@ -66,8 +64,6 @@ public class Search extends HttpServlet {
             request.setAttribute("lastPage", bookCount/6);
             path = PagesManager.getPage(PagesEnum.BOOK_CATALOG);
             LOG.info("LOGIN SUCCESS!");
-
-
             request.getRequestDispatcher(path).forward(request, response);
         } catch (ServletException e) {
             e.printStackTrace();

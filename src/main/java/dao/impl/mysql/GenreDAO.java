@@ -39,7 +39,7 @@ public class GenreDAO implements IBaseDAO<Genre> {
     }
 
     @Override
-    public Genre read(int genreID) {
+    public Genre read(Integer genreID) {
         Genre result = null;
         ResultSet resultSet = null;
         try(Connection connection = ConnectionsPool.getInstance().getConnection();
@@ -105,7 +105,7 @@ public class GenreDAO implements IBaseDAO<Genre> {
     }
 
     @Override
-    public List<Genre> execute(QueriesEnum query, long param, int start) {
+    public List<Genre> execute(QueriesEnum query, Integer param, int start) {
         return null;
     }
 
@@ -115,14 +115,14 @@ public class GenreDAO implements IBaseDAO<Genre> {
     }
 
     @Override
-    public boolean delete(int key) {
+    public boolean delete(Integer key) {
         return false;
     }
 
     private Genre createGenre(ResultSet resultSet) {
         Genre result = null;
         try {
-            int genreID = resultSet.getInt("id");
+            Integer genreID = resultSet.getInt("id");
             String name = resultSet.getString("name");
             result = new Genre(genreID, name);
         } catch (SQLException e) {

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by EgorVeremeychik on 17.04.2016.
  */
-public class Book implements Serializable, IEntity {
+public class Bookq implements Serializable, IEntity {
 
     private Integer id;
     private String name;
@@ -16,16 +16,15 @@ public class Book implements Serializable, IEntity {
     private String image = "image-not-found.jpg";
     private Author author;
     private int pageCount;
-    private byte[] content;
     private int publishDate;
     private String description;
     private Publisher publisher;
 
-    public Book() {
+    public Bookq() {
     }
 
-    public Book(Integer bookID, String name, int pageCount, String isbn, Genre genre, int publishDate,
-                Author author, Publisher publisher, String image, String description,byte[] content) {
+    public Bookq(Integer bookID, String name, int pageCount, String isbn, Genre genre, int publishDate,
+                 Author author, Publisher publisher, String image, String description) {
         this.id = bookID;
         this.name = name;
         this.pageCount = pageCount;
@@ -36,7 +35,6 @@ public class Book implements Serializable, IEntity {
         this.publisher = publisher;
         this.image = image;
         this.description = description;
-        this.content = content;
     }
 
     public String getName() {
@@ -45,14 +43,6 @@ public class Book implements Serializable, IEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public byte[] getContent() {
-        return content;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
     }
 
     public int getPageCount() {

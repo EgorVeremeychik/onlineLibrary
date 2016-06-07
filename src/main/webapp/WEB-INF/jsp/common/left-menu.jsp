@@ -6,10 +6,10 @@
 <div class="left-menu">
     <ul>
         <li>
-            <c:if test="${genre.id == alreadySaw}">
+            <c:if test="${alreadySaw == 0}">
                 <a style="color: red" href="main?genreID=0&page=1">Все книги</a>
             </c:if>
-            <c:if test="${genre.id != alreadySaw}">
+            <c:if test="${alreadySaw != 0}">
                 <a href="main?genreID=0&page=1">Все книги</a>
             </c:if>
         </li>
